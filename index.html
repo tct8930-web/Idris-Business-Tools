@@ -88,14 +88,16 @@
             line-height: 1.8;
         }
 
-        .invoice {
+        .invoice,
+        .price-list {
             background: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             border: 1px solid #ddd;
         }
 
-        .invoice h3 {
+        .invoice h3,
+        .price-list h3 {
             text-align: center;
             margin-top: 0;
         }
@@ -111,26 +113,6 @@
             font-size: 22px;
             font-weight: bold;
             margin-top: 15px;
-        }
-
-        .print-button {
-            background: #0b7a3b;
-        }
-
-        .print-button:hover {
-            background: #095f2f;
-        }
-
-        .price-list {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
-
-        .price-list h3 {
-            text-align: center;
-            margin-top: 0;
         }
 
         .price-item {
@@ -149,7 +131,13 @@
             font-weight: bold;
         }
 
-        /* WHATSAPP CONTACT */
+        .print-button {
+            background: #0b7a3b;
+        }
+
+        .print-button:hover {
+            background: #095f2f;
+        }
 
         .contact {
             max-width: 500px;
@@ -476,7 +464,6 @@
             document.getElementById("profitResult").style.display = "block";
 
             document.getElementById("profitResult").innerHTML =
-
                 "<strong>Total Cost:</strong> ₦" +
                 totalCost.toLocaleString() +
 
@@ -520,7 +507,6 @@
             document.getElementById("salesResult").style.display = "block";
 
             document.getElementById("salesResult").innerHTML =
-
                 "<strong>Total Sales:</strong> ₦" +
                 totalSales.toLocaleString();
         }
@@ -559,7 +545,6 @@
             document.getElementById("discountResult").style.display = "block";
 
             document.getElementById("discountResult").innerHTML =
-
                 "<strong>Discount Amount:</strong> ₦" +
                 discountAmount.toLocaleString() +
 
@@ -612,13 +597,73 @@
             let invoiceDate =
                 new Date().toLocaleDateString();
 
+            let invoiceHTML =
+                '<div class="invoice">' +
+
+                    '<h3>INVOICE</h3>' +
+
+                    '<div class="invoice-info">' +
+
+                        '<div>' +
+                            '<strong>Invoice No:</strong><br>' +
+                            invoiceNumber +
+                        '</div>' +
+
+                        '<div>' +
+                            '<strong>Date:</strong><br>' +
+                            invoiceDate +
+                        '</div>' +
+
+                    '</div>' +
+
+                    '<p>' +
+                        '<strong>Business:</strong> ' +
+                        businessName +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Customer:</strong> ' +
+                        customerName +
+                    '</p>' +
+
+                    '<hr>' +
+
+                    '<p>' +
+                        '<strong>Item/Service:</strong> ' +
+                        itemName +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Quantity:</strong> ' +
+                        quantity +
+                    '</p>' +
+
+                    '<p>' +
+                        '<strong>Price:</strong> ₦' +
+                        price.toLocaleString() +
+                    '</p>' +
+
+                    '<hr>' +
+
+                    '<p class="total">' +
+                        'Total: ₦' +
+                        total.toLocaleString() +
+                    '</p>' +
+
+                '</div>' +
+
+                '<button class="print-button" onclick="printInvoice()">' +
+                    '🖨️ Print / Save as PDF' +
+                '</button>';
+
             document.getElementById("invoiceResult").style.display = "block";
 
-            document.getElementById("invoiceResult").innerHTML =                  <div class="invoice">                      <h3>INVOICE</h3>                      <div class="invoice-info">                          <div>                             <strong>Invoice No:</strong><br>                             ${invoiceNumber}                         </div>                          <div>                             <strong>Date:</strong><br>                             ${invoiceDate}                         </div>                      </div>                      <p>                         <strong>Business:</strong>                         ${businessName}                     </p>                      <p>                         <strong>Customer:</strong>                         ${customerName}                     </p>                      <hr>                      <p>                         <strong>Item/Service:</strong>                         ${itemName}                     </p>                      <p>                         <strong>Quantity:</strong>                         ${quantity}                     </p>                      <p>                         <strong>Price:</strong>                         ₦${price.toLocaleString()}                     </p>                      <hr>                      <p class="total">                         Total: ₦${total.toLocaleString()}                     </p>                  </div>                  <button                     class="print-button"                     onclick="printInvoice()"                 >                     🖨️ Print / Save as PDF                 </button>             ;
+            document.getElementById("invoiceResult").innerHTML =
+                invoiceHTML;
         }
 
 
-        // PRINT / SAVE INVOICE
+        // PRINT INVOICE
 
         function printInvoice() {
 
@@ -642,7 +687,55 @@
                 return;
             }
 
-            printWindow.document.write(                 <!DOCTYPE html>                  <html>                  <head>                      <title>Invoice</title>                      <style>                          body {                             font-family: Arial, sans-serif;                             padding: 30px;                             color: #222;                         }                          .invoice {                             max-width: 600px;                             margin: auto;                             padding: 30px;                             border: 1px solid #ddd;                         }                          .invoice h3 {                             text-align: center;                         }                          .invoice-info {                             display: flex;                             justify-content: space-between;                             margin-bottom: 20px;                         }                          .total {                             font-size: 22px;                             font-weight: bold;                         }                      </style>                  </head>                  <body>                      ${invoice.outerHTML}                  </body>                  </html>             );
+            printWindow.document.write(
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+
+                    '<title>Invoice</title>' +
+
+                    '<style>' +
+
+                        'body {' +
+                            'font-family: Arial, sans-serif;' +
+                            'padding: 30px;' +
+                            'color: #222;' +
+                        '}' +
+
+                        '.invoice {' +
+                            'max-width: 600px;' +
+                            'margin: auto;' +
+                            'padding: 30px;' +
+                            'border: 1px solid #ddd;' +
+                        '}' +
+
+                        '.invoice h3 {' +
+                            'text-align: center;' +
+                        '}' +
+
+                        '.invoice-info {' +
+                            'display: flex;' +
+                            'justify-content: space-between;' +
+                            'margin-bottom: 20px;' +
+                        '}' +
+
+                        '.total {' +
+                            'font-size: 22px;' +
+                            'font-weight: bold;' +
+                        '}' +
+
+                    '</style>' +
+
+                '</head>' +
+
+                '<body>' +
+
+                    invoice.outerHTML +
+
+                '</body>' +
+
+                '</html>'
+            );
 
             printWindow.document.close();
 
@@ -653,7 +746,6 @@
                 printWindow.print();
 
             }, 500);
-
         }
 
 
@@ -684,9 +776,38 @@
                 return;
             }
 
+            let priceListHTML =
+                '<div class="price-list">' +
+
+                    '<h3>' +
+                        businessName +
+                    '</h3>' +
+
+                    '<hr>' +
+
+                    '<div class="price-item">' +
+
+                        '<span>' +
+                            itemName +
+                        '</span>' +
+
+                        '<span class="price">' +
+                            '₦' +
+                            price.toLocaleString() +
+                        '</span>' +
+
+                    '</div>' +
+
+                '</div>' +
+
+                '<button class="print-button" onclick="printPriceList()">' +
+                    '🖨️ Print / Save as PDF' +
+                '</button>';
+
             document.getElementById("priceListResult").style.display = "block";
 
-            document.getElementById("priceListResult").innerHTML =                  <div class="price-list">                      <h3>${businessName}</h3>                      <hr>                      <div class="price-item">                          <span>                             ${itemName}                         </span>                          <span class="price">                             ₦${price.toLocaleString()}                         </span>                      </div>                  </div>                  <button                     class="print-button"                     onclick="printPriceList()"                 >                     🖨️ Print / Save as PDF                 </button>             ;
+            document.getElementById("priceListResult").innerHTML =
+                priceListHTML;
         }
 
 
@@ -714,7 +835,56 @@
                 return;
             }
 
-            printWindow.document.write(                 <!DOCTYPE html>                  <html>                  <head>                      <title>Price List</title>                      <style>                          body {                             font-family: Arial, sans-serif;                             padding: 30px;                             color: #222;                         }                          .price-list {                             max-width: 600px;                             margin: auto;                             padding: 30px;                             border: 1px solid #ddd;                         }                          .price-list h3 {                             text-align: center;                         }                          .price-item {                             display: flex;                             justify-content: space-between;                             padding: 15px 0;                             border-bottom: 1px solid #ddd;                         }                          .price {                             font-weight: bold;                         }                      </style>                  </head>                  <body>                      ${priceList.outerHTML}                  </body>                  </html>             );
+            printWindow.document.write(
+                '<!DOCTYPE html>' +
+                '<html>' +
+
+                '<head>' +
+
+                    '<title>Price List</title>' +
+
+                    '<style>' +
+
+                        'body {' +
+                            'font-family: Arial, sans-serif;' +
+                            'padding: 30px;' +
+                            'color: #222;' +
+                        '}' +
+
+                        '.price-list {' +
+                            'max-width: 600px;' +
+                            'margin: auto;' +
+                            'padding: 30px;' +
+                            'border: 1px solid #ddd;' +
+                        '}' +
+
+                        '.price-list h3 {' +
+                            'text-align: center;' +
+                        '}' +
+
+                        '.price-item {' +
+                            'display: flex;' +
+                            'justify-content: space-between;' +
+                            'padding: 15px 0;' +
+                            'border-bottom: 1px solid #ddd;' +
+                        '}' +
+
+                        '.price {' +
+                            'font-weight: bold;' +
+                        '}' +
+
+                    '</style>' +
+
+                '</head>' +
+
+                '<body>' +
+
+                    priceList.outerHTML +
+
+                '</body>' +
+
+                '</html>'
+            );
 
             printWindow.document.close();
 
@@ -725,11 +895,10 @@
                 printWindow.print();
 
             }, 500);
-
         }
 
     </script>
 
 </body>
 
-</html>
+</ht
