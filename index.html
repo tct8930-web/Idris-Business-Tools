@@ -246,36 +246,40 @@
     </div>
 
 
-    <!-- DISCOUNT CALCULATOR -->
+    <!-- SALES CALCULATOR -->
 
-    <div class="tool">
+<div class="tool">
 
-        <h2>🏷️ Discount Calculator</h2>
+    <h2>💰 Sales Calculator</h2>
 
-        <label>Original Price</label>
+    <label>Product Price</label>
 
-        <input
-            type="number"
-            id="originalPrice"
-            placeholder="Enter original price"
-        >
+    <input
+        type="number"
+        id="salesPrice"
+        placeholder="Enter product price"
+    >
 
-        <label>Discount Percentage</label>
+    <label>Quantity Sold</label>
 
-        <input
-            type="number"
-            id="discountPercent"
-            placeholder="Example: 20"
-        >
+    <input
+        type="number"
+        id="salesQuantity"
+        placeholder="Enter quantity"
+    >
 
-        <button onclick="calculateDiscount()">
-            Calculate Discount
-        </button>
+    <button onclick="calculateSales()">
+        Calculate Total Sales
+    </button>
 
-        <div id="discountResult" class="result"></div>
+    <div id="salesResult" class="result"></div>
 
-    </div>
+</div>
 
+
+<!-- DISCOUNT CALCULATOR -->
+
+<div class="tool">
 
     <!-- INVOICE GENERATOR -->
 
