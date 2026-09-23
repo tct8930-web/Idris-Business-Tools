@@ -8,6 +8,7 @@
     <title>Idris Business Tools</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -120,15 +121,46 @@
             background: #095f2f;
         }
 
+        .price-list {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .price-list h3 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price {
+            font-weight: bold;
+        }
+
         footer {
             text-align: center;
             margin-top: 40px;
             color: #777;
         }
+
     </style>
+
 </head>
 
 <body>
+
 
     <header>
 
@@ -266,6 +298,45 @@
     </div>
 
 
+    <!-- PRICE LIST GENERATOR -->
+
+    <div class="tool">
+
+        <h2>🏷️ Price List Generator</h2>
+
+        <label>Business Name</label>
+
+        <input
+            type="text"
+            id="priceListBusiness"
+            placeholder="Example: Idris Fashion Store"
+        >
+
+        <label>Product or Service</label>
+
+        <input
+            type="text"
+            id="priceListItem"
+            placeholder="Example: T-Shirt"
+        >
+
+        <label>Price</label>
+
+        <input
+            type="number"
+            id="priceListPrice"
+            placeholder="Example: 15000"
+        >
+
+        <button onclick="generatePriceList()">
+            Generate Price List
+        </button>
+
+        <div id="priceListResult" class="result"></div>
+
+    </div>
+
+
     <footer>
 
         <p>
@@ -276,6 +347,7 @@
 
 
     <script>
+
 
         // PROFIT CALCULATOR
 
@@ -565,6 +637,162 @@
                 <body>
 
                     ${invoice.outerHTML}
+
+                </body>
+
+                </html>
+
+            `);
+
+            printWindow.document.close();
+
+            printWindow.focus();
+
+            setTimeout(function() {
+
+                printWindow.print();
+
+            }, 500);
+
+        }
+
+
+        // PRICE LIST GENERATOR
+
+        function generatePriceList() {
+
+            let businessName =
+                document.getElementById("priceListBusiness").value.trim();
+
+            let itemName =
+                document.getElementById("priceListItem").value.trim();
+
+            let price =
+                Number(document.getElementById("priceListPrice").value);
+
+
+            if (
+                businessName === "" ||
+                itemName === "" ||
+                price <= 0
+            ) {
+
+                document.getElementById("priceListResult").style.display = "block";
+
+                document.getElementById("priceListResult").innerHTML =
+                    "<strong>Please complete all fields.</strong>";
+
+                return;
+            }
+
+
+            document.getElementById("priceListResult").style.display = "block";
+
+
+            document.getElementById("priceListResult").innerHTML = `
+
+                <div class="price-list">
+
+                    <h3>${businessName}</h3>
+
+                    <hr>
+
+                    <div class="price-item">
+
+                        <span>
+                            ${itemName}
+                        </span>
+
+                        <span class="price">
+                            ₦${price.toLocaleString()}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="print-button"
+                    onclick="printPriceList()"
+                >
+                    🖨️ Print / Save as PDF
+                </button>
+
+            `;
+        }
+
+
+        // PRINT PRICE LIST
+
+        function printPriceList() {
+
+            let priceList =
+                document.querySelector(".price-list");
+
+            if (!priceList) {
+
+                alert("Please generate a price list first.");
+
+                return;
+            }
+
+            let printWindow =
+                window.open("", "_blank");
+
+            if (!printWindow) {
+
+                alert("Please allow pop-ups for this website.");
+
+                return;
+            }
+
+            printWindow.document.write(`
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <title>Price List</title>
+
+                    <style>
+
+                        body {
+                            font-family: Arial, sans-serif;
+                            padding: 30px;
+                            color: #222;
+                        }
+
+                        .price-list {
+                            max-width: 600px;
+                            margin: auto;
+                            padding: 30px;
+                            border: 1px solid #ddd;
+                        }
+
+                        .price-list h3 {
+                            text-align: center;
+                        }
+
+                        .price-item {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 15px 0;
+                            border-bottom: 1px solid #ddd;
+                        }
+
+                        .price {
+                            font-weight: bold;
+                        }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    ${priceList.outerHTML}
 
                 </body>
 
