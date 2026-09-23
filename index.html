@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Idris Business Tools | Profit Calculator</title>
+    <title>Idris Business Tools</title>
 
     <style>
         * {
@@ -20,24 +20,31 @@
             color: #222;
         }
 
-        .calculator {
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #666;
+        }
+
+        .tool {
             max-width: 500px;
-            margin: 40px auto;
+            margin: 25px auto;
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
         }
 
-        h1 {
+        h2 {
             text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .intro {
-            text-align: center;
-            color: #666;
-            margin-bottom: 25px;
+            margin-top: 0;
         }
 
         label {
@@ -53,11 +60,6 @@
             border: 1px solid #ccc;
             border-radius: 7px;
             font-size: 16px;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #222;
         }
 
         button {
@@ -76,7 +78,7 @@
             background: #444;
         }
 
-        #result {
+        .result {
             display: none;
             margin-top: 25px;
             padding: 20px;
@@ -85,64 +87,159 @@
             line-height: 1.8;
         }
 
-        .profit {
+        .main-result {
             font-size: 22px;
             font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="calculator">
+    <header>
 
-        <h1>Profit Calculator</h1>
+        <h1>Idris Business Tools</h1>
 
-        <p class="intro">
-            Calculate your business profit and profit percentage.
+        <p>
+            Simple tools to help small businesses calculate prices and profits.
         </p>
 
+    </header>
+
+
+    <!-- PROFIT CALCULATOR -->
+
+    <div class="tool">
+
+        <h2>🧮 Profit Calculator</h2>
+
         <label for="buyingPrice">Buying Price</label>
-        <input type="number" id="buyingPrice" placeholder="Enter buying price">
+
+        <input
+            type="number"
+            id="buyingPrice"
+            placeholder="Enter buying price"
+        >
 
         <label for="sellingPrice">Selling Price</label>
-        <input type="number" id="sellingPrice" placeholder="Enter selling price">
+
+        <input
+            type="number"
+            id="sellingPrice"
+            placeholder="Enter selling price"
+        >
 
         <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" placeholder="Enter quantity">
 
-        <button onclick="calculateProfit()">Calculate Profit</button>
+        <input
+            type="number"
+            id="quantity"
+            placeholder="Enter quantity"
+        >
 
-        <div id="result"></div>
+        <button onclick="calculateProfit()">
+            Calculate Profit
+        </button>
+
+        <div id="profitResult" class="result"></div>
 
     </div>
 
+
+    <!-- DISCOUNT CALCULATOR -->
+
+    <div class="tool">
+
+        <h2>🏷️ Discount Calculator</h2>
+
+        <label for="originalPrice">Original Price</label>
+
+        <input
+            type="number"
+            id="originalPrice"
+            placeholder="Enter original price"
+        >
+
+        <label for="discountPercent">Discount Percentage</label>
+
+        <input
+            type="number"
+            id="discountPercent"
+            placeholder="Example: 20"
+        >
+
+        <button onclick="calculateDiscount()">
+            Calculate Discount
+        </button>
+
+        <div id="discountResult" class="result"></div>
+
+    </div>
+
+
+    <footer>
+
+        <p>
+            © 2026 Idris Business Tools
+        </p>
+
+    </footer>
+
+
     <script>
+
+        // PROFIT CALCULATOR
 
         function calculateProfit() {
 
-            let buyingPrice = Number(document.getElementById("buyingPrice").value);
-            let sellingPrice = Number(document.getElementById("sellingPrice").value);
-            let quantity = Number(document.getElementById("quantity").value);
+            let buyingPrice =
+                Number(document.getElementById("buyingPrice").value);
 
-            if (buyingPrice <= 0 || sellingPrice <= 0 || quantity <= 0) {
-                document.getElementById("result").style.display = "block";
+            let sellingPrice =
+                Number(document.getElementById("sellingPrice").value);
 
-                document.getElementById("result").innerHTML =
+            let quantity =
+                Number(document.getElementById("quantity").value);
+
+
+            if (
+                buyingPrice <= 0 ||
+                sellingPrice <= 0 ||
+                quantity <= 0
+            ) {
+
+                document.getElementById("profitResult").style.display = "block";
+
+                document.getElementById("profitResult").innerHTML =
                     "<strong>Please enter valid numbers.</strong>";
 
                 return;
             }
 
-            let totalCost = buyingPrice * quantity;
-            let totalSales = sellingPrice * quantity;
-            let profit = totalSales - totalCost;
 
-            let profitPercentage = (profit / totalCost) * 100;
+            let totalCost =
+                buyingPrice * quantity;
 
-            document.getElementById("result").style.display = "block";
+            let totalSales =
+                sellingPrice * quantity;
 
-            document.getElementById("result").innerHTML =
+            let profit =
+                totalSales - totalCost;
+
+            let profitPercentage =
+                (profit / totalCost) * 100;
+
+
+            document.getElementById("profitResult").style.display = "block";
+
+            document.getElementById("profitResult").innerHTML =
+
                 "<strong>Total Cost:</strong> ₦" +
                 totalCost.toLocaleString() +
 
@@ -153,7 +250,55 @@
                 profit.toLocaleString() +
 
                 "<br><strong>Profit Percentage:</strong> " +
-                profitPercentage.toFixed(2) + "%";
+                profitPercentage.toFixed(2) +
+                "%";
+
+        }
+
+
+        // DISCOUNT CALCULATOR
+
+        function calculateDiscount() {
+
+            let originalPrice =
+                Number(document.getElementById("originalPrice").value);
+
+            let discountPercent =
+                Number(document.getElementById("discountPercent").value);
+
+
+            if (
+                originalPrice <= 0 ||
+                discountPercent < 0 ||
+                discountPercent > 100
+            ) {
+
+                document.getElementById("discountResult").style.display = "block";
+
+                document.getElementById("discountResult").innerHTML =
+                    "<strong>Please enter valid numbers.</strong>";
+
+                return;
+            }
+
+
+            let discountAmount =
+                originalPrice * (discountPercent / 100);
+
+            let finalPrice =
+                originalPrice - discountAmount;
+
+
+            document.getElementById("discountResult").style.display = "block";
+
+            document.getElementById("discountResult").innerHTML =
+
+                "<strong>Discount Amount:</strong> ₦" +
+                discountAmount.toLocaleString() +
+
+                "<br><strong>Final Price:</strong> ₦" +
+                finalPrice.toLocaleString();
+
         }
 
     </script>
