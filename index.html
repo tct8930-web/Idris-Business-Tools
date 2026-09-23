@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Idris Business Tools | Profit Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .calculator {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <h1>Profit Calculator</h1>
+
+        <p>Calculate your business profit easily.</p>
+
+        <label>Buying Price</label>
+        <input type="number" id="buyingPrice" placeholder="Enter buying price">
+
+        <label>Selling Price</label>
+        <input type="number" id="sellingPrice" placeholder="Enter selling price">
+
+        <label>Quantity</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+
+        <button onclick="calculateProfit()">Calculate Profit</button>
+
+        <div id="result">
+            Your result will appear here.
+        </div>
+
+    </div>
+
+    <script>
+
+        function calculateProfit() {
+
+            let buyingPrice = Number(document.getElementById("buyingPrice").value);
+            let sellingPrice = Number(document.getElementById("sellingPrice").value);
+            let quantity = Number(document.getElementById("quantity").value);
+
+            let totalCost = buyingPrice * quantity;
+            let totalSales = sellingPrice * quantity;
+            let profit = totalSales - totalCost;
+
+            document.getElementById("result").innerHTML =
+                "<strong>Total Cost:</strong> ₦" + totalCost.toLocaleString() +
+                "<br><br>" +
+                "<strong>Total Sales:</strong> ₦" + totalSales.toLocaleString() +
+                "<br><br>" +
+                "<strong>Profit:</strong> ₦" + profit.toLocaleString();
+        }
+
+    </script>
+
+</body>
+
+</html>
