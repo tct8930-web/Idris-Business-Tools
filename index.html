@@ -87,9 +87,22 @@
             line-height: 1.8;
         }
 
-        .main-result {
+        .invoice {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .invoice h3 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .total {
             font-size: 22px;
             font-weight: bold;
+            margin-top: 15px;
         }
 
         footer {
@@ -107,7 +120,7 @@
         <h1>Idris Business Tools</h1>
 
         <p>
-            Simple tools to help small businesses calculate prices and profits.
+            Simple tools to help small businesses.
         </p>
 
     </header>
@@ -119,7 +132,7 @@
 
         <h2>🧮 Profit Calculator</h2>
 
-        <label for="buyingPrice">Buying Price</label>
+        <label>Buying Price</label>
 
         <input
             type="number"
@@ -127,7 +140,7 @@
             placeholder="Enter buying price"
         >
 
-        <label for="sellingPrice">Selling Price</label>
+        <label>Selling Price</label>
 
         <input
             type="number"
@@ -135,7 +148,7 @@
             placeholder="Enter selling price"
         >
 
-        <label for="quantity">Quantity</label>
+        <label>Quantity</label>
 
         <input
             type="number"
@@ -158,7 +171,7 @@
 
         <h2>🏷️ Discount Calculator</h2>
 
-        <label for="originalPrice">Original Price</label>
+        <label>Original Price</label>
 
         <input
             type="number"
@@ -166,7 +179,7 @@
             placeholder="Enter original price"
         >
 
-        <label for="discountPercent">Discount Percentage</label>
+        <label>Discount Percentage</label>
 
         <input
             type="number"
@@ -179,6 +192,61 @@
         </button>
 
         <div id="discountResult" class="result"></div>
+
+    </div>
+
+
+    <!-- INVOICE GENERATOR -->
+
+    <div class="tool">
+
+        <h2>🧾 Invoice Generator</h2>
+
+        <label>Business Name</label>
+
+        <input
+            type="text"
+            id="businessName"
+            placeholder="Example: Idris Web Services"
+        >
+
+        <label>Customer Name</label>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Enter customer name"
+        >
+
+        <label>Item or Service</label>
+
+        <input
+            type="text"
+            id="itemName"
+            placeholder="Example: Website Design"
+        >
+
+        <label>Quantity</label>
+
+        <input
+            type="number"
+            id="invoiceQuantity"
+            placeholder="Enter quantity"
+        >
+
+        <label>Price</label>
+
+        <input
+            type="number"
+            id="itemPrice"
+            placeholder="Enter price"
+        >
+
+        <button onclick="generateInvoice()">
+            Generate Invoice
+        </button>
+
+        <div id="invoiceResult" class="result"></div>
 
     </div>
 
@@ -207,7 +275,6 @@
             let quantity =
                 Number(document.getElementById("quantity").value);
 
-
             if (
                 buyingPrice <= 0 ||
                 sellingPrice <= 0 ||
@@ -222,7 +289,6 @@
                 return;
             }
 
-
             let totalCost =
                 buyingPrice * quantity;
 
@@ -234,7 +300,6 @@
 
             let profitPercentage =
                 (profit / totalCost) * 100;
-
 
             document.getElementById("profitResult").style.display = "block";
 
@@ -250,9 +315,7 @@
                 profit.toLocaleString() +
 
                 "<br><strong>Profit Percentage:</strong> " +
-                profitPercentage.toFixed(2) +
-                "%";
-
+                profitPercentage.toFixed(2) + "%";
         }
 
 
@@ -265,7 +328,6 @@
 
             let discountPercent =
                 Number(document.getElementById("discountPercent").value);
-
 
             if (
                 originalPrice <= 0 ||
@@ -281,13 +343,11 @@
                 return;
             }
 
-
             let discountAmount =
                 originalPrice * (discountPercent / 100);
 
             let finalPrice =
                 originalPrice - discountAmount;
-
 
             document.getElementById("discountResult").style.display = "block";
 
@@ -298,7 +358,95 @@
 
                 "<br><strong>Final Price:</strong> ₦" +
                 finalPrice.toLocaleString();
+        }
 
+
+        // INVOICE GENERATOR
+
+        function generateInvoice() {
+
+            let businessName =
+                document.getElementById("businessName").value;
+
+            let customerName =
+                document.getElementById("customerName").value;
+
+            let itemName =
+                document.getElementById("itemName").value;
+
+            let quantity =
+                Number(document.getElementById("invoiceQuantity").value);
+
+            let price =
+                Number(document.getElementById("itemPrice").value);
+
+
+            if (
+                businessName === "" ||
+                customerName === "" ||
+                itemName === "" ||
+                quantity <= 0 ||
+                price <= 0
+            ) {
+
+                document.getElementById("invoiceResult").style.display = "block";
+
+                document.getElementById("invoiceResult").innerHTML =
+                    "<strong>Please complete all fields.</strong>";
+
+                return;
+            }
+
+
+            let total =
+                quantity * price;
+
+
+            document.getElementById("invoiceResult").style.display = "block";
+
+
+            document.getElementById("invoiceResult").innerHTML = `
+
+                <div class="invoice">
+
+                    <h3>INVOICE</h3>
+
+                    <p>
+                        <strong>Business:</strong>
+                        ${businessName}
+                    </p>
+
+                    <p>
+                        <strong>Customer:</strong>
+                        ${customerName}
+                    </p>
+
+                    <hr>
+
+                    <p>
+                        <strong>Item/Service:</strong>
+                        ${itemName}
+                    </p>
+
+                    <p>
+                        <strong>Quantity:</strong>
+                        ${quantity}
+                    </p>
+
+                    <p>
+                        <strong>Price:</strong>
+                        ₦${price.toLocaleString()}
+                    </p>
+
+                    <hr>
+
+                    <p class="total">
+                        Total: ₦${total.toLocaleString()}
+                    </p>
+
+                </div>
+
+            `;
         }
 
     </script>
