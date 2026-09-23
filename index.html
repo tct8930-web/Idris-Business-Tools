@@ -105,6 +105,14 @@
             margin-top: 15px;
         }
 
+        .print-button {
+            background: #0b7a3b;
+        }
+
+        .print-button:hover {
+            background: #095f2f;
+        }
+
         footer {
             text-align: center;
             margin-top: 40px;
@@ -446,7 +454,94 @@
 
                 </div>
 
+                <button
+                    class="print-button"
+                    onclick="printInvoice()"
+                >
+                    🖨️ Print / Save as PDF
+                </button>
+
             `;
+        }
+
+
+        // PRINT / SAVE INVOICE
+
+        function printInvoice() {
+
+            let invoice =
+                document.querySelector(".invoice");
+
+            if (!invoice) {
+
+                alert("Please generate an invoice first.");
+
+                return;
+            }
+
+            let printWindow =
+                window.open("", "_blank");
+
+            printWindow.document.write(`
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <title>Invoice</title>
+
+                    <style>
+
+                        body {
+                            font-family: Arial, sans-serif;
+                            padding: 30px;
+                            color: #222;
+                        }
+
+                        .invoice {
+                            max-width: 600px;
+                            margin: auto;
+                            padding: 30px;
+                            border: 1px solid #ddd;
+                        }
+
+                        .invoice h3 {
+                            text-align: center;
+                        }
+
+                        .total {
+                            font-size: 22px;
+                            font-weight: bold;
+                        }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    ${invoice.outerHTML}
+
+                </body>
+
+                </html>
+
+            `);
+
+            printWindow.document.close();
+
+            printWindow.focus();
+
+            setTimeout(function() {
+
+                printWindow.print();
+
+                printWindow.close();
+
+            }, 500);
+
         }
 
     </script>
