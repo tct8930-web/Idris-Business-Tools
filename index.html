@@ -177,32 +177,6 @@
             color: #777;
         }
 
-        @media print {
-
-            body * {
-                visibility: hidden;
-            }
-
-            .print-area,
-            .print-area * {
-                visibility: visible;
-            }
-
-            .print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 30px;
-                background: white;
-            }
-
-            .print-button {
-                display: none !important;
-            }
-        }
-
     </style>
 
 </head>
@@ -624,7 +598,7 @@
                 new Date().toLocaleDateString();
 
             let invoiceHTML =
-                '<div class="invoice print-area">' +
+                '<div class="invoice">' +
 
                     '<h3>INVOICE</h3>' +
 
@@ -703,15 +677,101 @@
                 return;
             }
 
-            document.body.classList.add("printing");
+            let printWindow =
+                window.open("", "_blank");
 
-            window.print();
+            if (!printWindow) {
 
-            setTimeout(function() {
+                alert("Please allow pop-ups for this website.");
 
-                document.body.classList.remove("printing");
+                return;
+            }
 
-            }, 1000);
+            printWindow.document.write(
+                '<!DOCTYPE html>' +
+                '<html>' +
+
+                '<head>' +
+
+                    '<title>Invoice</title>' +
+
+                    '<style>' +
+
+                        '@page {' +
+                            'size: A4;' +
+                            'margin: 0;' +
+                        '}' +
+
+                        '* {' +
+                            'box-sizing: border-box;' +
+                        '}' +
+
+                        'html, body {' +
+                            'width: 210mm;' +
+                            'height: 297mm;' +
+                            'margin: 0;' +
+                            'padding: 0;' +
+                        '}' +
+
+                        'body {' +
+                            'font-family: Arial, sans-serif;' +
+                            'color: #222;' +
+                            'background: white;' +
+                            'overflow: hidden;' +
+                        '}' +
+
+                        '.invoice {' +
+                            'width: 170mm;' +
+                            'margin: 20mm auto;' +
+                            'padding: 20mm;' +
+                            'border: 1px solid #ddd;' +
+                            'border-radius: 10px;' +
+                            'page-break-inside: avoid;' +
+                            'break-inside: avoid;' +
+                        '}' +
+
+                        '.invoice h3 {' +
+                            'text-align: center;' +
+                            'margin-top: 0;' +
+                        '}' +
+
+                        '.invoice-info {' +
+                            'display: flex;' +
+                            'justify-content: space-between;' +
+                            'margin-bottom: 20px;' +
+                        '}' +
+
+                        '.total {' +
+                            'font-size: 22px;' +
+                            'font-weight: bold;' +
+                        '}' +
+
+                    '</style>' +
+
+                '</head>' +
+
+                '<body>' +
+
+                    invoice.outerHTML +
+
+                '</body>' +
+
+                '</html>'
+            );
+
+            printWindow.document.close();
+
+            printWindow.onload = function() {
+
+                setTimeout(function() {
+
+                    printWindow.focus();
+
+                    printWindow.print();
+
+                }, 300);
+
+            };
         }
 
 
@@ -743,7 +803,7 @@
             }
 
             let priceListHTML =
-                '<div class="price-list print-area">' +
+                '<div class="price-list">' +
 
                     '<h3>' +
                         businessName +
@@ -791,15 +851,101 @@
                 return;
             }
 
-            document.body.classList.add("printing");
+            let printWindow =
+                window.open("", "_blank");
 
-            window.print();
+            if (!printWindow) {
 
-            setTimeout(function() {
+                alert("Please allow pop-ups for this website.");
 
-                document.body.classList.remove("printing");
+                return;
+            }
 
-            }, 1000);
+            printWindow.document.write(
+                '<!DOCTYPE html>' +
+                '<html>' +
+
+                '<head>' +
+
+                    '<title>Price List</title>' +
+
+                    '<style>' +
+
+                        '@page {' +
+                            'size: A4;' +
+                            'margin: 0;' +
+                        '}' +
+
+                        '* {' +
+                            'box-sizing: border-box;' +
+                        '}' +
+
+                        'html, body {' +
+                            'width: 210mm;' +
+                            'height: 297mm;' +
+                            'margin: 0;' +
+                            'padding: 0;' +
+                        '}' +
+
+                        'body {' +
+                            'font-family: Arial, sans-serif;' +
+                            'color: #222;' +
+                            'background: white;' +
+                            'overflow: hidden;' +
+                        '}' +
+
+                        '.price-list {' +
+                            'width: 170mm;' +
+                            'margin: 20mm auto;' +
+                            'padding: 20mm;' +
+                            'border: 1px solid #ddd;' +
+                            'border-radius: 10px;' +
+                            'page-break-inside: avoid;' +
+                            'break-inside: avoid;' +
+                        '}' +
+
+                        '.price-list h3 {' +
+                            'text-align: center;' +
+                            'margin-top: 0;' +
+                        '}' +
+
+                        '.price-item {' +
+                            'display: flex;' +
+                            'justify-content: space-between;' +
+                            'padding: 15px 0;' +
+                            'border-bottom: 1px solid #ddd;' +
+                        '}' +
+
+                        '.price {' +
+                            'font-weight: bold;' +
+                        '}' +
+
+                    '</style>' +
+
+                '</head>' +
+
+                '<body>' +
+
+                    priceList.outerHTML +
+
+                '</body>' +
+
+                '</html>'
+            );
+
+            printWindow.document.close();
+
+            printWindow.onload = function() {
+
+                setTimeout(function() {
+
+                    printWindow.focus();
+
+                    printWindow.print();
+
+                }, 300);
+
+            };
         }
 
     </script>
