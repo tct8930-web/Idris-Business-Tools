@@ -177,6 +177,32 @@
             color: #777;
         }
 
+        @media print {
+
+            body * {
+                visibility: hidden;
+            }
+
+            .print-area,
+            .print-area * {
+                visibility: visible;
+            }
+
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 30px;
+                background: white;
+            }
+
+            .print-button {
+                display: none !important;
+            }
+        }
+
     </style>
 
 </head>
@@ -414,7 +440,7 @@
     <footer>
 
         <p>
-            © 2026 Idris Business Tools
+            ©️ 2026 Idris Business Tools
         </p>
 
     </footer>
@@ -598,7 +624,7 @@
                 new Date().toLocaleDateString();
 
             let invoiceHTML =
-                '<div class="invoice">' +
+                '<div class="invoice print-area">' +
 
                     '<h3>INVOICE</h3>' +
 
@@ -668,7 +694,7 @@
         function printInvoice() {
 
             let invoice =
-                document.querySelector(".invoice");
+                document.querySelector("#invoiceResult .invoice");
 
             if (!invoice) {
 
@@ -677,75 +703,15 @@
                 return;
             }
 
-            let printWindow =
-                window.open("", "_blank");
+            document.body.classList.add("printing");
 
-            if (!printWindow) {
-
-                alert("Please allow pop-ups for this website.");
-
-                return;
-            }
-
-            printWindow.document.write(
-                '<!DOCTYPE html>' +
-                '<html>' +
-                '<head>' +
-
-                    '<title>Invoice</title>' +
-
-                    '<style>' +
-
-                        'body {' +
-                            'font-family: Arial, sans-serif;' +
-                            'padding: 30px;' +
-                            'color: #222;' +
-                        '}' +
-
-                        '.invoice {' +
-                            'max-width: 600px;' +
-                            'margin: auto;' +
-                            'padding: 30px;' +
-                            'border: 1px solid #ddd;' +
-                        '}' +
-
-                        '.invoice h3 {' +
-                            'text-align: center;' +
-                        '}' +
-
-                        '.invoice-info {' +
-                            'display: flex;' +
-                            'justify-content: space-between;' +
-                            'margin-bottom: 20px;' +
-                        '}' +
-
-                        '.total {' +
-                            'font-size: 22px;' +
-                            'font-weight: bold;' +
-                        '}' +
-
-                    '</style>' +
-
-                '</head>' +
-
-                '<body>' +
-
-                    invoice.outerHTML +
-
-                '</body>' +
-
-                '</html>'
-            );
-
-            printWindow.document.close();
-
-            printWindow.focus();
+            window.print();
 
             setTimeout(function() {
 
-                printWindow.print();
+                document.body.classList.remove("printing");
 
-            }, 500);
+            }, 1000);
         }
 
 
@@ -777,7 +743,7 @@
             }
 
             let priceListHTML =
-                '<div class="price-list">' +
+                '<div class="price-list print-area">' +
 
                     '<h3>' +
                         businessName +
@@ -816,7 +782,7 @@
         function printPriceList() {
 
             let priceList =
-                document.querySelector(".price-list");
+                document.querySelector("#priceListResult .price-list");
 
             if (!priceList) {
 
@@ -825,80 +791,19 @@
                 return;
             }
 
-            let printWindow =
-                window.open("", "_blank");
+            document.body.classList.add("printing");
 
-            if (!printWindow) {
-
-                alert("Please allow pop-ups for this website.");
-
-                return;
-            }
-
-            printWindow.document.write(
-                '<!DOCTYPE html>' +
-                '<html>' +
-
-                '<head>' +
-
-                    '<title>Price List</title>' +
-
-                    '<style>' +
-
-                        'body {' +
-                            'font-family: Arial, sans-serif;' +
-                            'padding: 30px;' +
-                            'color: #222;' +
-                        '}' +
-
-                        '.price-list {' +
-                            'max-width: 600px;' +
-                            'margin: auto;' +
-                            'padding: 30px;' +
-                            'border: 1px solid #ddd;' +
-                        '}' +
-
-                        '.price-list h3 {' +
-                            'text-align: center;' +
-                        '}' +
-
-                        '.price-item {' +
-                            'display: flex;' +
-                            'justify-content: space-between;' +
-                            'padding: 15px 0;' +
-                            'border-bottom: 1px solid #ddd;' +
-                        '}' +
-
-                        '.price {' +
-                            'font-weight: bold;' +
-                        '}' +
-
-                    '</style>' +
-
-                '</head>' +
-
-                '<body>' +
-
-                    priceList.outerHTML +
-
-                '</body>' +
-
-                '</html>'
-            );
-
-            printWindow.document.close();
-
-            printWindow.focus();
+            window.print();
 
             setTimeout(function() {
 
-                printWindow.print();
+                document.body.classList.remove("printing");
 
-            }, 500);
+            }, 1000);
         }
 
     </script>
 
 </body>
 
-</ht
+</html>
