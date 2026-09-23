@@ -195,7 +195,6 @@
 
 <body>
 
-
     <header>
 
         <h1>Idris Business Tools</h1>
@@ -248,38 +247,65 @@
 
     <!-- SALES CALCULATOR -->
 
-<div class="tool">
+    <div class="tool">
 
-    <h2>💰 Sales Calculator</h2>
+        <h2>💰 Sales Calculator</h2>
 
-    <label>Product Price</label>
+        <label>Product Price</label>
 
-    <input
-        type="number"
-        id="salesPrice"
-        placeholder="Enter product price"
-    >
+        <input
+            type="number"
+            id="salesPrice"
+            placeholder="Enter product price"
+        >
 
-    <label>Quantity Sold</label>
+        <label>Quantity Sold</label>
 
-    <input
-        type="number"
-        id="salesQuantity"
-        placeholder="Enter quantity"
-    >
+        <input
+            type="number"
+            id="salesQuantity"
+            placeholder="Enter quantity"
+        >
 
-    <button onclick="calculateSales()">
-        Calculate Total Sales
-    </button>
+        <button onclick="calculateSales()">
+            Calculate Total Sales
+        </button>
 
-    <div id="salesResult" class="result"></div>
+        <div id="salesResult" class="result"></div>
 
-</div>
+    </div>
 
 
-<!-- DISCOUNT CALCULATOR -->
+    <!-- DISCOUNT CALCULATOR -->
 
-<div class="tool">
+    <div class="tool">
+
+        <h2>🏷️ Discount Calculator</h2>
+
+        <label>Original Price</label>
+
+        <input
+            type="number"
+            id="originalPrice"
+            placeholder="Enter original price"
+        >
+
+        <label>Discount Percentage</label>
+
+        <input
+            type="number"
+            id="discountPercent"
+            placeholder="Example: 20"
+        >
+
+        <button onclick="calculateDiscount()">
+            Calculate Discount
+        </button>
+
+        <div id="discountResult" class="result"></div>
+
+    </div>
+
 
     <!-- INVOICE GENERATOR -->
 
@@ -408,7 +434,6 @@
 
     <script>
 
-
         // PROFIT CALCULATOR
 
         function calculateProfit() {
@@ -463,6 +488,41 @@
 
                 "<br><strong>Profit Percentage:</strong> " +
                 profitPercentage.toFixed(2) + "%";
+        }
+
+
+        // SALES CALCULATOR
+
+        function calculateSales() {
+
+            let price =
+                Number(document.getElementById("salesPrice").value);
+
+            let quantity =
+                Number(document.getElementById("salesQuantity").value);
+
+            if (
+                price <= 0 ||
+                quantity <= 0
+            ) {
+
+                document.getElementById("salesResult").style.display = "block";
+
+                document.getElementById("salesResult").innerHTML =
+                    "<strong>Please enter valid numbers.</strong>";
+
+                return;
+            }
+
+            let totalSales =
+                price * quantity;
+
+            document.getElementById("salesResult").style.display = "block";
+
+            document.getElementById("salesResult").innerHTML =
+
+                "<strong>Total Sales:</strong> ₦" +
+                totalSales.toLocaleString();
         }
 
 
@@ -527,7 +587,6 @@
             let price =
                 Number(document.getElementById("itemPrice").value);
 
-
             if (
                 businessName === "" ||
                 customerName === "" ||
@@ -544,85 +603,18 @@
                 return;
             }
 
-
             let total =
                 quantity * price;
-
 
             let invoiceNumber =
                 "INV-" + Date.now().toString().slice(-6);
 
-
             let invoiceDate =
                 new Date().toLocaleDateString();
 
-
             document.getElementById("invoiceResult").style.display = "block";
 
-
-            document.getElementById("invoiceResult").innerHTML = `
-
-                <div class="invoice">
-
-                    <h3>INVOICE</h3>
-
-                    <div class="invoice-info">
-
-                        <div>
-                            <strong>Invoice No:</strong><br>
-                            ${invoiceNumber}
-                        </div>
-
-                        <div>
-                            <strong>Date:</strong><br>
-                            ${invoiceDate}
-                        </div>
-
-                    </div>
-
-                    <p>
-                        <strong>Business:</strong>
-                        ${businessName}
-                    </p>
-
-                    <p>
-                        <strong>Customer:</strong>
-                        ${customerName}
-                    </p>
-
-                    <hr>
-
-                    <p>
-                        <strong>Item/Service:</strong>
-                        ${itemName}
-                    </p>
-
-                    <p>
-                        <strong>Quantity:</strong>
-                        ${quantity}
-                    </p>
-
-                    <p>
-                        <strong>Price:</strong>
-                        ₦${price.toLocaleString()}
-                    </p>
-
-                    <hr>
-
-                    <p class="total">
-                        Total: ₦${total.toLocaleString()}
-                    </p>
-
-                </div>
-
-                <button
-                    class="print-button"
-                    onclick="printInvoice()"
-                >
-                    🖨️ Print / Save as PDF
-                </button>
-
-            `;
+            document.getElementById("invoiceResult").innerHTML =                  <div class="invoice">                      <h3>INVOICE</h3>                      <div class="invoice-info">                          <div>                             <strong>Invoice No:</strong><br>                             ${invoiceNumber}                         </div>                          <div>                             <strong>Date:</strong><br>                             ${invoiceDate}                         </div>                      </div>                      <p>                         <strong>Business:</strong>                         ${businessName}                     </p>                      <p>                         <strong>Customer:</strong>                         ${customerName}                     </p>                      <hr>                      <p>                         <strong>Item/Service:</strong>                         ${itemName}                     </p>                      <p>                         <strong>Quantity:</strong>                         ${quantity}                     </p>                      <p>                         <strong>Price:</strong>                         ₦${price.toLocaleString()}                     </p>                      <hr>                      <p class="total">                         Total: ₦${total.toLocaleString()}                     </p>                  </div>                  <button                     class="print-button"                     onclick="printInvoice()"                 >                     🖨️ Print / Save as PDF                 </button>             ;
         }
 
 
@@ -650,59 +642,7 @@
                 return;
             }
 
-            printWindow.document.write(`
-
-                <!DOCTYPE html>
-
-                <html>
-
-                <head>
-
-                    <title>Invoice</title>
-
-                    <style>
-
-                        body {
-                            font-family: Arial, sans-serif;
-                            padding: 30px;
-                            color: #222;
-                        }
-
-                        .invoice {
-                            max-width: 600px;
-                            margin: auto;
-                            padding: 30px;
-                            border: 1px solid #ddd;
-                        }
-
-                        .invoice h3 {
-                            text-align: center;
-                        }
-
-                        .invoice-info {
-                            display: flex;
-                            justify-content: space-between;
-                            margin-bottom: 20px;
-                        }
-
-                        .total {
-                            font-size: 22px;
-                            font-weight: bold;
-                        }
-
-                    </style>
-
-                </head>
-
-                <body>
-
-                    ${invoice.outerHTML}
-
-                </body>
-
-                </html>
-
-            `);
+            printWindow.document.write(                 <!DOCTYPE html>                  <html>                  <head>                      <title>Invoice</title>                      <style>                          body {                             font-family: Arial, sans-serif;                             padding: 30px;                             color: #222;                         }                          .invoice {                             max-width: 600px;                             margin: auto;                             padding: 30px;                             border: 1px solid #ddd;                         }                          .invoice h3 {                             text-align: center;                         }                          .invoice-info {                             display: flex;                             justify-content: space-between;                             margin-bottom: 20px;                         }                          .total {                             font-size: 22px;                             font-weight: bold;                         }                      </style>                  </head>                  <body>                      ${invoice.outerHTML}                  </body>                  </html>             );
 
             printWindow.document.close();
 
@@ -730,7 +670,6 @@
             let price =
                 Number(document.getElementById("priceListPrice").value);
 
-
             if (
                 businessName === "" ||
                 itemName === "" ||
@@ -745,40 +684,9 @@
                 return;
             }
 
-
             document.getElementById("priceListResult").style.display = "block";
 
-
-            document.getElementById("priceListResult").innerHTML = `
-
-                <div class="price-list">
-
-                    <h3>${businessName}</h3>
-
-                    <hr>
-
-                    <div class="price-item">
-
-                        <span>
-                            ${itemName}
-                        </span>
-
-                        <span class="price">
-                            ₦${price.toLocaleString()}
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <button
-                    class="print-button"
-                    onclick="printPriceList()"
-                >
-                    🖨️ Print / Save as PDF
-                </button>
-
-            `;
+            document.getElementById("priceListResult").innerHTML =                  <div class="price-list">                      <h3>${businessName}</h3>                      <hr>                      <div class="price-item">                          <span>                             ${itemName}                         </span>                          <span class="price">                             ₦${price.toLocaleString()}                         </span>                      </div>                  </div>                  <button                     class="print-button"                     onclick="printPriceList()"                 >                     🖨️ Print / Save as PDF                 </button>             ;
         }
 
 
@@ -806,59 +714,7 @@
                 return;
             }
 
-            printWindow.document.write(`
-
-                <!DOCTYPE html>
-
-                <html>
-
-                <head>
-
-                    <title>Price List</title>
-
-                    <style>
-
-                        body {
-                            font-family: Arial, sans-serif;
-                            padding: 30px;
-                            color: #222;
-                        }
-
-                        .price-list {
-                            max-width: 600px;
-                            margin: auto;
-                            padding: 30px;
-                            border: 1px solid #ddd;
-                        }
-
-                        .price-list h3 {
-                            text-align: center;
-                        }
-
-                        .price-item {
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 15px 0;
-                            border-bottom: 1px solid #ddd;
-                        }
-
-                        .price {
-                            font-weight: bold;
-                        }
-
-                    </style>
-
-                </head>
-
-                <body>
-
-                    ${priceList.outerHTML}
-
-                </body>
-
-                </html>
-
-            `);
+            printWindow.document.write(                 <!DOCTYPE html>                  <html>                  <head>                      <title>Price List</title>                      <style>                          body {                             font-family: Arial, sans-serif;                             padding: 30px;                             color: #222;                         }                          .price-list {                             max-width: 600px;                             margin: auto;                             padding: 30px;                             border: 1px solid #ddd;                         }                          .price-list h3 {                             text-align: center;                         }                          .price-item {                             display: flex;                             justify-content: space-between;                             padding: 15px 0;                             border-bottom: 1px solid #ddd;                         }                          .price {                             font-weight: bold;                         }                      </style>                  </head>                  <body>                      ${priceList.outerHTML}                  </body>                  </html>             );
 
             printWindow.document.close();
 
